@@ -26,11 +26,6 @@ public class JsonUtilities {
             httpURLConnection.setRequestProperty("User-Agent", "java:com.mycompany.redditSpringApplication:v0.0.1-SNAPSHOT (by /u/gfudim)");
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
-            int response = httpURLConnection.getResponseCode();
-            System.out.println("Response code is: " + response);
-            if (response != 200) {
-                throw new RuntimeException("HttpResponseCode: " + response);
-            }
             Scanner sc = new Scanner(url.openStream());
             text = "";
             while (sc.hasNext()) {
