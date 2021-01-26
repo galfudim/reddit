@@ -12,17 +12,18 @@ public class Controller {
 
 //    data > children > data > title
 //    data > children > data > url_overridden_by_dest
-    private static final String template = "http://www.reddit.com/r/%s/.json?limit=20";
+    private static final String template = "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=MONT&key=MW9S-E7SL-26DU-VV8V&json=y";
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/articles")
-    public List<RedditObject> greeting(@RequestParam(value = "name", defaultValue = "news") String name) {
+    public List<RedditObject> greeting(@RequestParam(value = "subreddit", defaultValue = "news") String subreddit) {
         List<RedditObject> arr = new ArrayList<>();
 // return json list pulled from reddit
         //        for i in jsonList:
         //        add new object, return list
-        arr.add(new RedditObject(counter.incrementAndGet(), name, String.format(template, name)));
-        arr.add(new RedditObject(counter.incrementAndGet(), name, String.format(template, name)));
+        arr.add(new RedditObject(counter.incrementAndGet(), subreddit, String.format("/r/%s", subreddit)));
+        arr.add(new RedditObject(counter.incrementAndGet(), subreddit, String.format("/r/%s", subreddit)));
+        System.out.println(JsonUtilities.parseJson(template));
         return arr;
     }
 }
