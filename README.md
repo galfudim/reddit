@@ -21,7 +21,7 @@ mvn clean package
 java -jar target/reddit-0.0.1-SNAPSHOT.jar 
 ```
 
-####5. Using:
+#### 5. Using:
 Go to `http://localhost:8080/articles` and specify a subreddit name for the subreddit field and a limit on number of articles for the limit field. For example: `http://localhost:8080/articles?subreddit=NBA&limit=5`.
 The response should look like this:
 ```json
