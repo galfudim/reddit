@@ -4,12 +4,12 @@ public class RedditObject {
 
     private final long id;
     private final String title;
-    private final String url;
+    private final String permalink;
 
     public RedditObject(long id, String title, String url) {
         this.id = id;
         this.title = title;
-        this.url = url;
+        this.permalink = url;
     }
 
     public long getId() {
@@ -20,7 +20,7 @@ public class RedditObject {
         return title;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPermalink() {
+        return permalink;
     }
 }

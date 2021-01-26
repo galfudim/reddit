@@ -12,7 +12,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JsonUtilities {
-    public static String parseJson(String urlString) {
+    public static String parseJsonIntoList(String urlString, List<RedditObject> redditObjectList) {
         AtomicLong counter = new AtomicLong();
         URL url;
         String text, title, permalink, output = "";
@@ -20,38 +20,34 @@ public class JsonUtilities {
         JSONArray children;
 
         try {
-            // Fetching data from BART API, with the following parameters: cmd=etd (current departure information), orig=MONT (Montgomery St. station), key=MW9S-E7SL-26DU-VV8V (test key), json=y (produces JSON output)
-            url = new URL("https://www.reddit.com/r/usa/.json?limit=20");
+            url = new URL(urlString);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", "java:com.mycompany.redditSpringApplication:v0.0.1-SNAPSHOT (by /u/gfudim)");
+            httpURLConnection.setRequestProperty("User-Agent", "gfudim:redditParser:v0.0.1-SNAPSHOT (by /u/gfudim)");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json; utf-8");
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
+            int responseCode = httpURLConnection.getResponseCode();
+            if (responseCode != 200) {
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            }
             Scanner sc = new Scanner(url.openStream());
             text = "";
             while (sc.hasNext()) {
-                System.out.println("Entered scanner");
                 text += sc.nextLine();
             }
             sc.close();
-//            System.out.println(text);
-            // Parsing JSON output
             JSONParser parse = new JSONParser();
             jsonData = (JSONObject) parse.parse(text);
             jsonData = (JSONObject) jsonData.get("data");
             children = (JSONArray) jsonData.get("children");
-            System.out.println("About to:");
             for (int i = 0; i < children.size(); i++) {
                 currJsonObject = (JSONObject) children.get(i);
                 currData = (JSONObject) currJsonObject.get("data");
-
                 title = currData.get("title").toString();
                 permalink = currData.get("permalink").toString();
-
-                System.out.println(title);
-                System.out.println(permalink);
                 RedditObject ro = new RedditObject(counter.incrementAndGet(), title, permalink);
+                redditObjectList.add(ro);
             }
-            System.out.println("finished");
             httpURLConnection.disconnect();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
