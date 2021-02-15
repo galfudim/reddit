@@ -15,7 +15,7 @@
 	<description>Java app showing the top articles in a given subreddit</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
