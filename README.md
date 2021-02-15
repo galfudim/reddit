@@ -1,5 +1,7 @@
 # Java Reddit Scraper
 
+Deployed at [https://reddit-1613404364249.azurewebsites.net/articles](https://reddit-1613404364249.azurewebsites.net/articles)
+
 #### 1. Getting started
 ```
 git clone https://github.com/galfudim/reddit.git
